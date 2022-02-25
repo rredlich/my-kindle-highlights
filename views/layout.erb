@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Kindle highlights to markdown</title>
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="<%= url('css/bootstrap.min.css') %>" rel="stylesheet" type="text/css" />
+        <link href="<%= url('css/custom.css') %>" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body class="bg-light">
+        <nav class="container navbar navbar-light mb-5">
+            <a class="navbar-text text-dark text-decoration-none fw-light" href="/">
+                📕 &nbsp;Tus destacados de kindle
+            </a>
+        </nav>
+
+        <%= yield %>
+        
+        <div class="container">
+            <footer class="pt-5 my-4">
+                <p class="text-center text-muted border-top pt-3"><small>Hecho con ❤️ &nbsp;por Rodolfo Redlich · <a href="https://github.com/rredlich" target="_blank" class="text-decoration-none">github</a></small></p>
+            </footer>
+        </div>
+        <script src="<%= url('js/bootstrap.min.js') %>"></script>
+    </body>
+</html>
