@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            <% cntId = 0 %>
+            <nav class="nav flex-column" id="myTab" role="tablist">
+                <% @bookTitles.each do |title| %>
+                    <% if cntId == 0 %>
+                        <a class="nav-link active" id="item-<%= cntId%>" data-bs-toggle="tab" data-bs-target="#content-<%= cntId%>" type="button" role="tab" aria-controls="content-<%= cntId%>" aria-selected="true"><%= title %></a>
+                    <% else %>
+                        <a class="nav-link" id="item-<%= cntId%>" data-bs-toggle="tab" data-bs-target="#content-<%= cntId%>" type="button" role="tab" aria-controls="content-<%= cntId%>" aria-selected="false"><%= title %></a>
+                    <% end %>
+                    <% cntId = cntId+1 %>
+                <% end %>
+            </nav>
+        </div>
+        <div class="col-10">
+            <% cntId = 0 %>
+            <div class="tab-content">
+            <% @bookTitles.each do |title| %>
+                <% @clippingContent = @clippings.by_book(title) %>
+                    <% if cntId == 0 %>
+                        <div class="tab-pane active" id="content-<%= cntId%>" role="tabpanel" aria-labelledby="home-tab">
+                    <% else %>
+                        <div class="tab-pane" id="content-<%= cntId%>" role="tabpanel" aria-labelledby="home-tab">
+                    <% end %>
+
+                        <div class="row justify-content-center">
+                            <div class="col-8 mb-5">
+                                <h1 id="bookTitle"><%= @clippingContent.first.book_title %></h1>
+                                <h4 id="bookAuthor"><%= @clippingContent.first.author %></h4>
+                            </div>
+                            <% @clippingContent.each do |clipping| %>
+                            <% if clipping.type == "subrayado" %>
+                            <div class="col-8 mb-4">
+                                <p class="mb-1"><%= clipping.content %></p>
+                                <small class="text-secondary">Posición: <%= clipping.location %> | Página <%= clipping.page %></small>
+                            </div>
+                            <% end %>
+                            <% end %>
+                        </div>
+                    </div>
+                <% cntId = cntId+1 %>
+            <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  
+  <script>
+    var firstTabEl = document.querySelector('#myTab li:last-child button')
+    var firstTab = new bootstrap.Tab(firstTabEl)
+  
+    firstTab.show()
+  </script>
+  
