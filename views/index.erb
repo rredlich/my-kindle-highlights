@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h1 class="display-5">Tus destacados de Kindle más ordenados y legibles</h1>
+            <p class="text-muted">Sube tu archivo de recortes (<a class="link-primary text-decoration-none" data-bs-toggle="modal" data-bs-target="#helpfulModal">¿Donde lo encuentro?</a>), los ordenamos y los dejamos fáciles de leer</p>
+            <p class="text-muted mb-5">Este mini-proyecto no registra ningún dato de tus recortes</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <form class="row" action="/result" method="post" enctype="multipart/form-data">
+                <div class="col-12 mb-3">
+                    <input class="form-control" type="file" name="file">
+                </div>
+
+                <div class="d-grid gap-2 col-12 mx-auto">
+                    <input class="btn btn-primary mb-3" name="commit" type="submit" value="Subir archivo" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="helpfulModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">¿Donde encuentro mi archivo de recorte?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ol class="list-group list-group-numbered">
+                    <li class="list-group-item border-0">Conecta Kindle por USB a tu computador</li>
+                    <li class="list-group-item border-0">Abre el Kindle y entra a la carpeta documents</li>
+                    <li class="list-group-item border-0">Busca y copia a tu computador el archivo My Clippings.txt</li>
+                    <li class="list-group-item border-0">Sube My Clippings.txt a esta página</li>
+                </ol>                  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+  
