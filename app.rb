@@ -2,8 +2,7 @@ require 'sinatra'
 require 'json'
 require 'byebug'
 
-#hotwire
-
+# Copied from the repo https://github.com/georgboe/kindleclippings and changed to work in spanish clippings
 class Clipping
     attr_accessor :book_title, :author, :type, :location, :added_on, :content, :page
 
@@ -61,10 +60,9 @@ get '/' do
     erb :index
 end
 
-post '/upload' do
+post '/result' do
     @path = params['file']['tempfile']
-    #file_content = open(@path, 'r:bom|utf-8').read
-    file_content = open(@path, 'r:bom|UTF-8').read
+    file_content = open(@path, 'r:bom|utf-8').read
 
     
     @clippings = ClippingResult.new
@@ -96,8 +94,4 @@ post '/upload' do
     @clippingContent = @clippings.by_book(@title)
     
     erb :result
-end
-
-get '/upload' do
-    "Hello World get"
 end

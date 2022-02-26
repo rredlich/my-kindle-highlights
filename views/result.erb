@@ -5,9 +5,9 @@
             <nav class="nav flex-column" id="myTab" role="tablist">
                 <% @bookTitles.each do |title| %>
                     <% if cntId == 0 %>
-                        <a class="nav-link active" id="item-<%= cntId%>" data-bs-toggle="tab" data-bs-target="#content-<%= cntId%>" type="button" role="tab" aria-controls="content-<%= cntId%>" aria-selected="true"><%= title %></a>
+                        <a class="nav-link active small" id="item-<%= cntId%>" data-bs-toggle="tab" data-bs-target="#content-<%= cntId%>" type="button" role="tab" aria-controls="content-<%= cntId%>" aria-selected="true"><%= title %></a>
                     <% else %>
-                        <a class="nav-link" id="item-<%= cntId%>" data-bs-toggle="tab" data-bs-target="#content-<%= cntId%>" type="button" role="tab" aria-controls="content-<%= cntId%>" aria-selected="false"><%= title %></a>
+                        <a class="nav-link small" id="item-<%= cntId%>" data-bs-toggle="tab" data-bs-target="#content-<%= cntId%>" type="button" role="tab" aria-controls="content-<%= cntId%>" aria-selected="false"><%= title %></a>
                     <% end %>
                     <% cntId = cntId+1 %>
                 <% end %>
