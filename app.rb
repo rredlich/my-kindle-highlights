@@ -1,7 +1,3 @@
-require 'sinatra'
-require 'json'
-require 'byebug'
-
 # Copied from the repo https://github.com/georgboe/kindleclippings and changed to work in spanish clippings
 class Clipping
     attr_accessor :book_title, :author, :type, :location, :added_on, :content, :page
