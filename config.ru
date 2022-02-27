@@ -6,5 +6,5 @@ require 'byebug'
 
 Bundler.require
 
-require './app.rb'
+require './app'
 run KindleHighlights
