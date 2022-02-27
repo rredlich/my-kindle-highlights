@@ -1,7 +1,3 @@
-require 'sinatra'
-require 'json'
-require 'byebug'
-
 # Copied from the repo https://github.com/georgboe/kindleclippings and changed to work in spanish clippings
 class Clipping
     attr_accessor :book_title, :author, :type, :location, :added_on, :content, :page
@@ -56,42 +52,44 @@ class ClippingResult < Array
     end
 end
 
-get '/' do
-    erb :index
-end
-
-post '/result' do
-    @path = params['file']['tempfile']
-    file_content = open(@path, 'r:bom|utf-8').read
-
-    
-    @clippings = ClippingResult.new
-
-    file_content.split("=" * 10).each do |clipping|
-        clipping.lstrip!
-
-        lines = clipping.lines.to_a
-
-        break if lines.empty?
-
-        first_line = lines[0].strip.scan(/^(.+) \((.+)\)$/i).first
-        second_line = lines[1].strip.scan(/^-\s(?:Mi\s|Tu\s)?(\w+) (?:en la página ([0-9-]*?) \| )?(?:(?:Posición|Location)? ([0-9-]*?) +\| )?Añadido el (.*)$/i).first
-
-        if first_line.nil?
-            title = lines[0].strip
-            author = ""
-        else
-            title, author = *first_line
-        end
-        
-        type, page, location, date = *second_line
-
-        content = lines[3..-1].join("")
-        @clippings << Clipping.new(title.gsub("\uFEFF", ""), author, type, location, date, content.strip, page)
+class KindleHighlights < Sinatra::Base
+    get '/' do
+        erb :index
     end
 
-    @bookTitles = @clippings.map{|t| t.book_title}.uniq
-    @clippingContent = @clippings.by_book(@title)
-    
-    erb :result
+    post '/result' do
+        @path = params['file']['tempfile']
+        file_content = open(@path, 'r:bom|utf-8').read
+
+        
+        @clippings = ClippingResult.new
+
+        file_content.split("=" * 10).each do |clipping|
+            clipping.lstrip!
+
+            lines = clipping.lines.to_a
+
+            break if lines.empty?
+
+            first_line = lines[0].strip.scan(/^(.+) \((.+)\)$/i).first
+            second_line = lines[1].strip.scan(/^-\s(?:Mi\s|Tu\s)?(\w+) (?:en la página ([0-9-]*?) \| )?(?:(?:Posición|Location)? ([0-9-]*?) +\| )?Añadido el (.*)$/i).first
+
+            if first_line.nil?
+                title = lines[0].strip
+                author = ""
+            else
+                title, author = *first_line
+            end
+            
+            type, page, location, date = *second_line
+
+            content = lines[3..-1].join("")
+            @clippings << Clipping.new(title.gsub("\uFEFF", ""), author, type, location, date, content.strip, page)
+        end
+
+        @bookTitles = @clippings.map{|t| t.book_title}.uniq
+        @clippingContent = @clippings.by_book(@title)
+        
+        erb :result
+    end
 end
