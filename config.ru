@@ -2,7 +2,6 @@ require 'rubygems'
 require 'bundler'
 require 'sinatra'
 require 'json'
-require 'byebug'
 
 Bundler.require
 
