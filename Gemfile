@@ -1,4 +1,3 @@
 source 'https://rubygems.org'
-require 'sinatra'
-require 'json'
-require 'byebug'
+gem 'sinatra'
+gem 'puma'
