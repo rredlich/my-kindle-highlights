@@ -72,7 +72,7 @@ class KindleHighlights < Sinatra::Base
             break if lines.empty?
 
             first_line = lines[0].strip.scan(/^(.+) \((.+)\)$/i).first
-            second_line = lines[1].strip.scan(/^-\s(?:Mi\s|Tu\s)?(\w+) (?:en la página ([0-9-]*?) \| )?(?:(?:Posición|Location)? ([0-9-]*?) +\| )?Añadido el (.*)$/i).first
+            second_line = lines[1].strip.scan(/^-\s(?:Mi\s|Tu\s)?(\w+)(?: en la página ([0-9-]*?) \| )?(?:(?: en la posición|Posición|Location)? ([0-9-]*?) +\| )?Añadido el (.*)/i).first
 
             if first_line.nil?
                 title = lines[0].strip
