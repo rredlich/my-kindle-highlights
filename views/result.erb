@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-2">
+        <div class="col-4 col-md-3">
             <% cntId = 0 %>
             <nav class="nav flex-column" id="myTab" role="tablist">
                 <% @bookTitles.each do |title| %>
@@ -13,7 +13,7 @@
                 <% end %>
             </nav>
         </div>
-        <div class="col-10">
+        <div class="col-8 col-md-9">
             <% cntId = 0 %>
             <div class="tab-content">
             <% @bookTitles.each do |title| %>
@@ -25,13 +25,13 @@
                     <% end %>
 
                         <div class="row justify-content-center">
-                            <div class="col-8 mb-5">
+                            <div class="col-10 col-lg-9 mb-5">
                                 <h1 id="bookTitle"><%= @clippingContent.first.book_title %></h1>
                                 <h4 id="bookAuthor"><%= @clippingContent.first.author %></h4>
                             </div>
                             <% @clippingContent.each do |clipping| %>
                             <% if clipping.type == "subrayado" %>
-                            <div class="col-8 mb-4">
+                            <div class="col-10 col-lg-9 mb-4">
                                 <p class="mb-1"><%= clipping.content %></p>
                                 <small class="text-secondary">Posición: <%= clipping.location %> | Página <%= clipping.page %></small>
                             </div>
