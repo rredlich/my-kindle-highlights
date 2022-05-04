@@ -33,7 +33,11 @@
                             <% if clipping.type == "subrayado" %>
                             <div class="col-10 col-lg-9 mb-4">
                                 <p class="mb-1"><%= clipping.content %></p>
+                                <% if clipping.page == 0 %>
+                                    <small class="text-secondary">Posición: <%= clipping.location %></small>
+                                <% else %>
                                 <small class="text-secondary">Posición: <%= clipping.location %> | Página <%= clipping.page %></small>
+                                <% end %>
                             </div>
                             <% end %>
                             <% end %>
