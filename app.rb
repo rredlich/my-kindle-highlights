@@ -11,6 +11,9 @@ class Clipping
         @content = content
         @page = page.to_i
     end
+    def loc_to_i
+        return location.split('-').map(&:to_i)
+    end
     def to_hash
         {
             book_title: @book_title,
@@ -53,6 +56,10 @@ class ClippingResult < Array
 end
 
 class KindleHighlights < Sinatra::Base
+    configure :development do
+        register Sinatra::Reloader
+    end
+
     get '/' do
         erb :index
     end
@@ -87,8 +94,7 @@ class KindleHighlights < Sinatra::Base
             @clippings << Clipping.new(title.gsub("\uFEFF", ""), author, type, location, date, content.strip, page)
         end
 
-        @bookTitles = @clippings.map{|t| t.book_title}.uniq
-        @clippingContent = @clippings.by_book(@title)
+        @bookTitles = @clippings.map{|t| t.book_title}.uniq.sort
         
         erb :result
     end

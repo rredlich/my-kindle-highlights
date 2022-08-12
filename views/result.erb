@@ -17,7 +17,11 @@
             <% cntId = 0 %>
             <div class="tab-content">
             <% @bookTitles.each do |title| %>
-                <% @clippingContent = @clippings.by_book(title) %>
+                <% @clippingContent = @clippings.by_book(title)%>
+                    <% if @clippingContent[0].location != nil %>
+                        <% @clippingContent = @clippingContent.sort_by{ |c| c.loc_to_i[0] }%>
+                    <% end %>
+
                     <% if cntId == 0 %>
                         <div class="tab-pane active" id="content-<%= cntId%>" role="tabpanel" aria-labelledby="home-tab">
                     <% else %>

@@ -1,9 +1,8 @@
 require 'rubygems'
 require 'bundler'
-require 'sinatra'
 require 'json'
 
-Bundler.require
+Bundler.require(:default, ENV.fetch('RACK_ENV', 'development'))
 
 require './app'
 run KindleHighlights
