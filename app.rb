@@ -91,6 +91,8 @@ def write_notion_object(type, val)
 end
 
 class KindleHighlights < Sinatra::Base
+    helpers Sinatra::Cookies
+
     configure :development do
         register Sinatra::Reloader
     end
@@ -116,12 +118,16 @@ class KindleHighlights < Sinatra::Base
         
         data = JSON.parse response.body
         # data['access_token']
+
+        if response.code == '200'
+            cookies[:notion_id] = data['access_token']
+        end
         
-        response.code
+        erb :index
     end
 
     post '/send-to-notion' do
-        client = Notion::Client.new(token: '')
+        client = Notion::Client.new(token: cookies[:notion_id])
 
         children = []
         content_cnt = 0
