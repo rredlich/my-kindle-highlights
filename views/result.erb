@@ -17,12 +17,43 @@
             <% cntId = 0 %>
             <div class="tab-content">
             <% @bookTitles.each do |title| %>
-                <% @clippingContent = @clippings.by_book(title) %>
+                <% @clippingContent = @clippings.by_book(title)%>
+                    <% if @clippingContent[0].location != nil %>
+                        <% @clippingContent = @clippingContent.sort_by{ |c| c.loc_to_i[0] }%>
+                    <% end %>
+
                     <% if cntId == 0 %>
                         <div class="tab-pane active" id="content-<%= cntId%>" role="tabpanel" aria-labelledby="home-tab">
                     <% else %>
                         <div class="tab-pane" id="content-<%= cntId%>" role="tabpanel" aria-labelledby="home-tab">
                     <% end %>
+
+                        <div class="row justify-content-center">
+                            <div class="col-8 col-md-6 col-lg-4">
+                                <form class="row" action="/send-to-notion" method="post" enctype="multipart/form-data">
+                                    <div class="col-12 mb-3">
+                                        <input class="d-none" type="text" name="title" value="<%= @clippingContent.first.book_title %>">
+                                        <input class="d-none" type="text" name="author" value="<%= @clippingContent.first.author %>">
+                                        <% contentCnt = 0 %>
+                                        <% @clippingContent.each do |clipping| %>
+                                        <% if clipping.type == "subrayado" %>
+                                        <input class="d-none" type="text" name="con-<%= contentCnt%>" value="<%= clipping.content %>">
+                                        <% if clipping.page == 0 %>
+                                            <input class="d-none" type="text" name="loc-<%= contentCnt%>" value="Posición: <%= clipping.location %>">
+                                        <% else %>
+                                            <input class="d-none" type="text" name="loc-<%= contentCnt%>" value="Posición: <%= clipping.location %> | Página <%= clipping.page %>">
+                                        <% end %>
+                                        <% end %>
+                                        <% contentCnt = contentCnt+1 %>
+                                        <% end %>
+                                    </div>
+                    
+                                    <div class="d-grid gap-2 col-12 mx-auto">
+                                        <input class="btn btn-primary mb-3" name="commit" type="submit" value="Send to notion" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
 
                         <div class="row justify-content-center">
                             <div class="col-10 col-lg-9 mb-5">
