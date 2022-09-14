@@ -5,9 +5,7 @@ require 'net/http'
 require 'net/https'
 require 'uri'
 require 'dotenv'
-
-require "sinatra/base"
-require "sinatra/cookies"
+require 'encrypted_cookie'
 
 Bundler.require(:default, ENV.fetch('RACK_ENV', 'development'))
 Dotenv.load('config/.env')

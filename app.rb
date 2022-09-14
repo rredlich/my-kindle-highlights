@@ -91,11 +91,11 @@ def write_notion_object(type, val)
 end
 
 class KindleHighlights < Sinatra::Base
-    helpers Sinatra::Cookies
-
     configure :development do
         register Sinatra::Reloader
     end
+
+    use Rack::Session::EncryptedCookie, :secret => ''
 
     get '/' do
         erb :index
@@ -120,15 +120,16 @@ class KindleHighlights < Sinatra::Base
         # data['access_token']
 
         if response.code == '200'
-            cookies[:notion_id] = data['access_token']
+            session[:notion_id] = data['access_token']
         end
         
         erb :index
     end
 
     post '/send-to-notion' do
-        client = Notion::Client.new(token: cookies[:notion_id])
-
+        # client = Notion::Client.new(token: session[:notion_id])
+        client = Notion::Client.new(token: '')
+        
         children = []
         content_cnt = 0
 
@@ -161,7 +162,7 @@ class KindleHighlights < Sinatra::Base
                 'number': content_cnt
             }
         }
-
+        
         client.create_page(
              parent: { database_id: ENV['NOTION_DATABASE_ID']},
              properties: properties,
