@@ -3,7 +3,27 @@
         <div class="col-10 col-md-8 col-lg-6">
             <h1 class="display-5">Tus destacados de Kindle más ordenados y legibles</h1>
             <p class="text-muted">Sube tu archivo de recortes (<a class="link-primary text-decoration-none" data-bs-toggle="modal" data-bs-target="#helpfulModal">¿Donde lo encuentro?</a>), los ordenamos y los dejamos fáciles de leer</p>
-            <p class="text-muted mb-5">Este mini-proyecto no registra ningún dato de tus recortes</p>
+            <p class="text-muted mb-5">Este mini-proyecto no registra ningún dato de tus recortes. Si quieres quieres respaldarlos, te recomiendo hacer la integración con Notion</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-8 col-md-6 col-lg-4">
+            <% if @notion_login == false %>
+                <a href="https://api.notion.com/v1/oauth/authorize?owner=user&client_id=ed24f8bd-9b80-4827-b9fc-78a587e76b40&redirect_uri=https%3A%2F%2F0.0.0.0:9292%2Fnotion&response_type=code">integrar a notion</a>
+            <% else %>
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-2">
+                            <img src="<%= @notion_workspace_icon %>" class="img-fluid rounded-start" alt="notion user avatar">
+                        </div>
+                        <div class="col-md-10">
+                            <div class="card-body">
+                            <p class="card-text"><small class="text-muted">Conectado a <%= @notion_workspace_name %></small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -17,11 +37,6 @@
                     <input class="btn btn-primary mb-3" name="commit" type="submit" value="Subir archivo" />
                 </div>
             </form>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-8 col-md-6 col-lg-4">
-            <a href="https://api.notion.com/v1/oauth/authorize?owner=user&client_id=ed24f8bd-9b80-4827-b9fc-78a587e76b40&redirect_uri=https%3A%2F%2F0.0.0.0:9292%2Fnotion&response_type=code">integrar a notion</a>
         </div>
     </div>
 </div>

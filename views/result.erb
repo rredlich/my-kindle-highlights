@@ -29,9 +29,13 @@
                     <% end %>
 
                         <div class="row justify-content-center">
-                            <div class="col-8 col-md-6 col-lg-4">
+                            <div class="col-10 col-lg-9 mb-3">
+                                <h1 id="bookTitle"><%= @clippingContent.first.book_title %></h1>
+                                <h4 id="bookAuthor"><%= @clippingContent.first.author %></h4>
+                            </div>
+                            <div class="col-10 col-lg-9 mb-5">
                                 <form class="row" action="/send-to-notion" method="post" enctype="multipart/form-data">
-                                    <div class="col-12 mb-3">
+                                    <div class="col-12">
                                         <input class="d-none" type="text" name="title" value="<%= @clippingContent.first.book_title %>">
                                         <input class="d-none" type="text" name="author" value="<%= @clippingContent.first.author %>">
                                         <% contentCnt = 0 %>
@@ -48,17 +52,12 @@
                                         <% end %>
                                     </div>
                     
-                                    <div class="d-grid gap-2 col-12 mx-auto">
-                                        <input class="btn btn-primary mb-3" name="commit" type="submit" value="Send to notion" />
+                                    <div class="col-12">
+                                        <% if @notion_login == true %>
+                                            <input class="btn btn-outline-dark mb-3" name="commit" type="submit" value="Enviar a Notion" />
+                                        <% end %>
                                     </div>
                                 </form>
-                            </div>
-                        </div>
-
-                        <div class="row justify-content-center">
-                            <div class="col-10 col-lg-9 mb-5">
-                                <h1 id="bookTitle"><%= @clippingContent.first.book_title %></h1>
-                                <h4 id="bookAuthor"><%= @clippingContent.first.author %></h4>
                             </div>
                             <% @clippingContent.each do |clipping| %>
                             <% if clipping.type == "subrayado" %>
@@ -67,7 +66,7 @@
                                 <% if clipping.page == 0 %>
                                     <small class="text-secondary">Posición: <%= clipping.location %></small>
                                 <% else %>
-                                <small class="text-secondary">Posición: <%= clipping.location %> | Página <%= clipping.page %></small>
+                                    <small class="text-secondary">Posición: <%= clipping.location %> | Página <%= clipping.page %></small>
                                 <% end %>
                             </div>
                             <% end %>

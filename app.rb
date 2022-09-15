@@ -90,14 +90,32 @@ def write_notion_object(type, val)
     return object
 end
 
+def notion_login_validation()
+    if session[:notion_id] == nil or session[:notion_db_id] == nil
+        return false
+    else
+        client = Notion::Client.new(token: session[:notion_id])
+        result = client.search(filter: { property: 'object', value: 'database' })
+
+        if result.results[0].id == session[:notion_db_id]
+            return true
+        else
+            return false
+        end
+    end
+end
+
 class KindleHighlights < Sinatra::Base
     configure :development do
         register Sinatra::Reloader
     end
 
-    use Rack::Session::EncryptedCookie, :secret => ''
+    use Rack::Session::EncryptedCookie, :secret => ENV['ENC_SECRET_KEY']
 
     get '/' do
+        @notion_login = notion_login_validation()
+        @notion_workspace_name = session[:notion_ws_name]
+        @notion_workspace_icon = session[:notion_ws_icon]
         erb :index
     end
 
@@ -120,26 +138,33 @@ class KindleHighlights < Sinatra::Base
         # data['access_token']
 
         if response.code == '200'
+            client = Notion::Client.new(token: data['access_token'])
+            result = client.search(filter: { property: 'object', value: 'database' })
+
             session[:notion_id] = data['access_token']
+            session[:notion_db_id] = result.results[0].id
+            session[:notion_ws_name] = data['workspace_name']
+            session[:notion_ws_icon] = data['workspace_icon']
         end
         
+        byebug
+
         erb :index
     end
 
     post '/send-to-notion' do
-        # client = Notion::Client.new(token: session[:notion_id])
-        client = Notion::Client.new(token: '')
+        client = Notion::Client.new(token: session[:notion_id])
         
         children = []
+        content_aux = ''
         content_cnt = 0
 
         params.each do |key, val|
           if key[0..2] == 'con'
-            children << write_notion_object('content', val)
+            content_aux = val
             content_cnt = content_cnt+1
           elsif key[0..2] == 'loc'
-            children << write_notion_object('location', val)
-            children << write_notion_object('content', '')
+            children << write_notion_object('content', content_aux + "\n" + val + "\n")
           end
         end
         
@@ -164,12 +189,12 @@ class KindleHighlights < Sinatra::Base
         }
         
         client.create_page(
-             parent: { database_id: ENV['NOTION_DATABASE_ID']},
+             parent: { database_id: session[:notion_db_id]},
              properties: properties,
              children: children
         )
         
-        redirect 'https://www.notion.so/'+ENV['NOTION_DATABASE_ID']
+        redirect 'https://www.notion.so/' + session[:notion_db_id].tr('-','')
     end
 
     post '/result' do
@@ -203,6 +228,8 @@ class KindleHighlights < Sinatra::Base
         end
 
         @bookTitles = @clippings.map{|t| t.book_title}.uniq.sort
+
+        @notion_login = notion_login_validation()
         
         erb :result
     end
