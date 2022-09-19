@@ -41,12 +41,16 @@
                                         <% contentCnt = 0 %>
                                         <% @clippingContent.each do |clipping| %>
                                         <% if clipping.type == "subrayado" %>
-                                        <input class="d-none" type="text" name="con-<%= contentCnt%>" value="<%= clipping.content %>">
-                                        <% if clipping.page == 0 %>
-                                            <input class="d-none" type="text" name="loc-<%= contentCnt%>" value="Posición: <%= clipping.location %>">
-                                        <% else %>
-                                            <input class="d-none" type="text" name="loc-<%= contentCnt%>" value="Posición: <%= clipping.location %> | Página <%= clipping.page %>">
-                                        <% end %>
+                                            <input class="d-none" type="text" name="con-<%= contentCnt%>" value="<%= clipping.content %>">
+                                            <% if clipping.page == 0  && clipping.location.nil? == true %>
+                                                <input class="d-none" type="text" name="loc-<%= contentCnt%>" value="">
+                                            <% elsif clipping.page == 0  && clipping.location.nil? == false %>
+                                                <input class="d-none" type="text" name="loc-<%= contentCnt%>" value="Posición: <%= clipping.location %>">
+                                            <% elsif clipping.page != 0  && clipping.location.nil? == true %>
+                                            <input class="d-none" type="text" name="loc-<%= contentCnt%>" value="Página <%= clipping.page %>">
+                                            <% else %>
+                                                <input class="d-none" type="text" name="loc-<%= contentCnt%>" value="Posición: <%= clipping.location %> | Página <%= clipping.page %>">
+                                            <% end %>
                                         <% end %>
                                         <% contentCnt = contentCnt+1 %>
                                         <% end %>
@@ -63,8 +67,12 @@
                             <% if clipping.type == "subrayado" %>
                             <div class="col-10 col-lg-9 mb-4">
                                 <p class="mb-1"><%= clipping.content %></p>
-                                <% if clipping.page == 0 %>
+                                <% if clipping.page == 0  && clipping.location.nil? == true %>
+                                    <small class="text-secondary"></small>
+                                <% elsif clipping.page == 0  && clipping.location.nil? == false %>
                                     <small class="text-secondary">Posición: <%= clipping.location %></small>
+                                <% elsif clipping.page != 0  && clipping.location.nil? == true %>
+                                    <small class="text-secondary">Página <%= clipping.page %></small>
                                 <% else %>
                                     <small class="text-secondary">Posición: <%= clipping.location %> | Página <%= clipping.page %></small>
                                 <% end %>

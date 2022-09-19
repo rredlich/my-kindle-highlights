@@ -146,10 +146,8 @@ class KindleHighlights < Sinatra::Base
             session[:notion_ws_name] = data['workspace_name']
             session[:notion_ws_icon] = data['workspace_icon']
         end
-        
-        byebug
 
-        erb :index
+        redirect '/'
     end
 
     post '/send-to-notion' do
