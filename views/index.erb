@@ -2,7 +2,8 @@
     <div class="row justify-content-center">
         <div class="col-10 col-md-8 col-lg-6">
             <h1 class="display-5">Tus destacados de Kindle más ordenados y legibles</h1>
-            <p class="text-muted">Sube tu archivo de recortes (<a class="link-primary text-decoration-none" data-bs-toggle="modal" data-bs-target="#helpfulModal">¿Donde lo encuentro?</a>), los ordenamos y los dejamos fáciles de leer</p>
+            <p class="text-muted">Sube tu archivo de recortes (<a class="link-primary text-decoration-none" data-bs-toggle="modal" data-bs-target="#WhereFind
+            Modal">¿Donde lo encuentro?</a>), los ordenamos y los dejamos fáciles de leer</p>
             <p class="text-muted mb-5">Este mini-proyecto no registra ningún dato de tus recortes. Si quieres quieres respaldarlos, te recomiendo hacer la integración con Notion</p>
         </div>
     </div>
@@ -41,7 +42,7 @@
     </div>
 </div>
 
-<div id="helpfulModal" class="modal fade" tabindex="-1">
+<div id="WhereFindModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -54,6 +55,27 @@
                     <li class="list-group-item border-0">Abre el Kindle y entra a la carpeta documents</li>
                     <li class="list-group-item border-0">Busca y copia a tu computador el archivo My Clippings.txt</li>
                     <li class="list-group-item border-0">Sube My Clippings.txt a esta página</li>
+                </ol>                  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="NotionHelpModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">¿Cómo me integro a Notion?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ol class="list-group list-group-numbered">
+                    <li class="list-group-item border-0">Creáte una cuenta o logeate si tienes una en <a href="https://www.notion.so/signup">Notion</a></li>
+                    <li class="list-group-item border-0">Abre el link de la base de datos y presiona duplicar para copiarlo en tu cuenta de Notion</li>
+                    <li class="list-group-item border-0">Vuelve a esta página, presiona Integrar a Notion y da permisos de escritura a la base de datos que acabas de duplicar</li>
                 </ol>                  
             </div>
             <div class="modal-footer">
